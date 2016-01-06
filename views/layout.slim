@@ -1,0 +1,17 @@
+doctype html
+html lang="en"
+  head
+    title == @title || "Songs By Sinatra"
+    meta charset="utf-8"
+    link rel="stylesheet" href="/application.css" type="text/css"
+    / href is referring to a file that does not exist, however that sets up a path /application.css
+    / when the link askis for that file, the get '/application.css' route handler in main.rb will
+    / route the link to the correct stylesheet at /views/application.scss using the sass preprocessor
+    / because by default the route handler will look in the /views folder for files
+  body
+    header
+      h1 Songs By Sinatra
+      == slim :nav
+
+    section
+      == yield
