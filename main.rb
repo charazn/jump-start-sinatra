@@ -2,7 +2,7 @@ require './song'
 require 'sass'
 require 'sinatra'
 require 'sinatra/reloader' if development?
-require 'data_mapper'
+# require 'data_mapper'
 require 'slim'
 require 'securerandom'
 
