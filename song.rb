@@ -1,9 +1,10 @@
 require 'data_mapper'
 
+#Moved to main.rb
 # configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
 #With this commented, the authentication works!
-  DataMapper::Logger.new($stdout, :debug)
-  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+  # DataMapper::Logger.new($stdout, :debug)
+  # DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/development.db")
   # DataMapper.auto_upgrade! #For application wide use
 # end
 
