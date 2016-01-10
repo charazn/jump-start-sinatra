@@ -1,14 +1,16 @@
+require './sinatra/auth'
 require 'sinatra'
-# require 'sinatra/flash' #Did not work
+# require 'sinatra/flash' #Cannot load
 require 'sinatra/reloader' if development?
 require 'sass'
 # require 'data_mapper'
 require 'slim'
 require 'securerandom'
-# require 'dotenv' #Did not work
+# require 'pony' #Cannot load
+# require 'dotenv' #Cannot load
 require './song'
 
-# Dotenv.load #Did not work
+# Dotenv.load
 
 configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
 #With this commented, the authentication works!
@@ -26,17 +28,17 @@ configure :production do
   set :email_address => 'smtp.sendgrid.net',
       :email_user_name => ENV['SENDGRID_USERNAME'],
       :email_password => ENV['SENDGRID_PASSWORD'],
-      :email_domain => 'herokuapp.com'
+      :email_domain => 'heroku.com'
 end
 
 configure do
-  enable :sessions
+  # enable :sessions #Set in sinatra/auth
   set :session_secret, SecureRandom.hex(4)
-  set :username, 'frank'
-  set :password, 'sinatra'
+  # set :username, 'frank' #Set in sinatra/auth
+  # set :password, 'sinatra' #Set in sinatra/auth
 end
 
-#I find somewhat unnecessary because @title still must be set in each route handler
+#I find this somewhat unnecessary because @title still must be set in each route handler
 before do
   set_title
 end
@@ -68,8 +70,8 @@ helpers do
         :address => 'smtp.gmail.com',
         :port => '587',
         :enable_starttls_auto => true,
-        :user_name => 'charazn37',
-        :password => ENV['GMAIL'],
+        :user_name => ENV['GMAIL_USERNAME'],
+        :password => ENV['GMAIL_PASSWORD'],
         :authentication => :plain,
         :domain => 'localhost.localdomain'
       }
@@ -101,32 +103,13 @@ end
 
 post '/contact' do
   send_message
-  flash[:notice] = "Thank you for your message. We'll be in touch soon."
+  # flash[:notice] = "Thank you for your message. We'll be in touch soon."
   redirect to('/')
 end
 
 get '/fake-error' do
   status 500
   "There's nothing wrong, really."
-end
-
-get '/login' do
-  @title = "Login Page"
-  slim :login
-end
-
-post '/login' do
-  if params[:username] == settings.username && params[:password] == settings.password
-    session[:admin] = true
-    redirect to('/songs')
-  else
-    slim :login
-  end
-end
-
-get '/logout' do
-  session.clear
-  redirect to('/login')
 end
 
 get '/songs' do
@@ -152,14 +135,16 @@ get '/songs/:id' do
 end
 
 get '/songs/:id/edit' do
-  halt(401, 'Not Authorized User') unless session[:admin]
+  # halt(401, 'Not Authorized User') unless session[:admin]
+  protected!
   @song = Song.get(params[:id])
   slim :edit_song
 end
 
 put '/songs/:id' do
   # protected!
-  halt(401, 'Not Authorized User') unless session[:admin]
+  # halt(401, 'Not Authorized User') unless session[:admin]
+  protected!
   song = Song.get(params[:id])
   song.update(params[:song])
   # if song.update(params[:song])
@@ -169,7 +154,8 @@ put '/songs/:id' do
 end
 
 delete '/songs/:id' do
-  halt(401, 'Not Authorized User') unless session[:admin]
+  # halt(401, 'Not Authorized User') unless session[:admin]
+  protected!
   Song.get(params[:id]).destroy
   # if Song.get(params[:id]).destroy
   #   flash[:notice] = "Song deleted"

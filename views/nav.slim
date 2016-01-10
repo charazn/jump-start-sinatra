@@ -4,7 +4,7 @@ nav
     li: a href="/about" class=current_path?("/about") title="About" About
     li: a href="/contact" class=current_path?("/contact") title="Contact" Contact
     li: a href="/songs" class=current_path?("/songs") title="Songs" Songs
-    - if session[:admin]
+    - if authorized?
       li: a href="/logout" title="Logout" Logout
     - else
       li: a href="/login" title="Login" Login
