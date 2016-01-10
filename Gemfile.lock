@@ -1,17 +1,3 @@
-GIT
-  remote: https://github.com/SFEley/sinatra-flash.git
-  revision: 9060a9c022327ff53cc1971c363fe0ca0d9b262d
-  specs:
-    sinatra-flash (0.3.0)
-      sinatra (>= 1.0.0)
-
-GIT
-  remote: https://github.com/benprew/pony.git
-  revision: a1a616a0a24a8518bc6f6ea4f328c2c78195a37d
-  specs:
-    pony (1.11)
-      mail (>= 2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -82,6 +68,8 @@ GEM
     mime-types (2.99)
     multi_json (1.11.2)
     pg (0.18.4)
+    pony (1.11)
+      mail (>= 2.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -90,6 +78,8 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
@@ -110,10 +100,10 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter
   pg
-  pony!
+  pony
   sass
   sinatra
-  sinatra-flash!
+  sinatra-flash
   slim
   thin
 
