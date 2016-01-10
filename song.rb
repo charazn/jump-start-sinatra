@@ -23,9 +23,27 @@ class Song
   # def released_on=date
   #   super Date.strptime(date, '%m/%d/%Y')
   # end
+
+  #This module did not work...
+  # module SongHelpers
+  #   def find_songs
+  #     @songs = Song.all
+  #   end
+
+  #   def find_song
+  #     @song = Song.get(params[:id])
+  #   end
+
+  #   def create_song
+  #     @song = Song.create(params[:song])
+  #   end
+  # end
+
+  # helpers SongHelpers
 end
 
 DataMapper.finalize
+
 
 #Not use auto_migrate! which only creates a new table and wipes out existing data!
 #Not put Song.auto_upgrade! here, because will be run each time song.rb loads.

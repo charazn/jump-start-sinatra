@@ -1,9 +1,9 @@
 nav
   ul
-    li: a href="/" title="Home" Home
-    li: a href="/about" title="About" About
-    li: a href="/contact" title="Contact" Contact
-    li: a href="/songs" title="Songs" Songs
+    li: a href="/" class=current_path? title="Home" Home
+    li: a href="/about" class=current_path?("/about") title="About" About
+    li: a href="/contact" class=current_path?("/contact") title="Contact" Contact
+    li: a href="/songs" class=current_path?("/songs") title="Songs" Songs
     - if session[:admin]
       li: a href="/logout" title="Logout" Logout
     - else

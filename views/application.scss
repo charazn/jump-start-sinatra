@@ -66,6 +66,10 @@ nav {
   font-weight: bold;
 }
 
+nav a.current {
+  background: lighten($black, 10%);
+}
+
 p {
   font: 13px/1.4 $main-font;
 }
@@ -73,3 +77,13 @@ p {
 label {
   display: block;
 }
+
+// .flash {
+//   width: 600px;
+//   padding: 5px;
+//   font-weight: bold;
+//   margin: 20px;
+//   background: lighten($red, 60%);
+//   color: $red;
+//   border: 1px solid $red;
+// }
