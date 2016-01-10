@@ -1,7 +1,9 @@
-require './sinatra/auth'
 require 'sinatra'
+require './sinatra/auth'
 # require 'sinatra/flash' #Cannot load
 require 'sinatra/reloader' if development?
+require 'v8'
+require 'coffee-script'
 require 'sass'
 # require 'data_mapper'
 require 'slim'
@@ -83,6 +85,10 @@ get '/application.css' do
   scss :application
 end
 
+get '/javascripts/application.js' do
+  coffee :application
+end
+
 not_found do
   slim :not_found
 end
@@ -161,4 +167,13 @@ delete '/songs/:id' do
   #   flash[:notice] = "Song deleted"
   # end
   redirect to('/songs')
+end
+
+post '/songs/:id/like' do
+  @song = Song.get(params[:id])
+  @song.likes = @song.likes.next
+  @song.save
+  # redirect back
+  redirect to("/songs/#{@song.id}") unless request.xhr?
+  slim :like, :layout => false
 end

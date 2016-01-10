@@ -15,6 +15,7 @@ class Song
   property :lyrics, Text
   property :length, Integer
   # property :released_on, DateTime
+  property :likes, Integer, :default => 0
 
   # def released_on=date
   #   super Date.parse(date) #Suggested to use Date.parse instead of Date.new!

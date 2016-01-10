@@ -87,3 +87,18 @@ label {
 //   color: $red;
 //   border: 1px solid $red;
 // }
+
+#like {
+  p {
+    font-weight: bold;
+    color: $red;
+  }
+  input {
+    background: DarkGray url(/images/like.png) 0 2px no-repeat;
+    border: darken($red, 10%) 1px solid;
+    height: 40px;
+    padding-left: 40px;
+    color: white;
+    border-radius: 5px;
+  }
+}

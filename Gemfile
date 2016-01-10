@@ -9,6 +9,8 @@ gem "slim"
 gem "sass"
 gem "thin"
 gem "datamapper"
+gem "coffee-script"
+gem "therubyracer"
 
 group :development do
   gem "dm-sqlite-adapter"
