@@ -75,7 +75,6 @@ class Website < Sinatra::Base
       :to => "charazn37@gmail.com",
       :subject => params[:name] + " has contacted you",
       :body => params[:message],
-      :port => '587',
       :via => :smtp,
       :via_options => {
         :address => 'smtp.sendgrid.net',
