@@ -27,6 +27,7 @@ GEM
       data_objects (= 0.10.16)
     do_sqlite3 (0.10.16)
       data_objects (= 0.10.16)
+    dotenv (2.0.2)
     eventmachine (1.0.8)
     execjs (2.6.0)
     libv8 (3.16.14.13)
@@ -79,6 +80,7 @@ DEPENDENCIES
   dm-migrations
   dm-postgres-adapter
   dm-sqlite-adapter
+  dotenv
   pg
   pony
   sass

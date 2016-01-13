@@ -5,7 +5,7 @@ module Sinatra
   module Auth
     module Helpers
       def authorized?
-        puts ">>> authorized? #{session[:admin]}"
+        # puts ">>> authorized? #{session[:admin]}" #When debugging for the lost session[:admin]
         session[:admin]
       end
 
@@ -30,15 +30,15 @@ module Sinatra
       end
 
       app.post '/login' do
-        puts "Logging in... before username password check"
+        # puts "Logging in... before username password check" #When debugging for the lost session[:admin]
         if params[:username] == settings.username && params[:password] == settings.password
           session[:admin] = true
           flash[:notice] = "You are logged in as #{settings.username}"
-          puts "Should log in >> #{session[:admin]}"
+          # puts "Should log in >> #{session[:admin]}" #When debugging for the lost session[:admin]
           redirect to('/songs')
         else
           flash[:notice] = "The username or password you entered is incorrect"
-          puts "Failed to login"
+          # puts "Failed to login" #When debugging for the lost session[:admin]
           redirect to('/login')
         end
       end

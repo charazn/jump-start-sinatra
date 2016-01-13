@@ -98,7 +98,7 @@ class SongController < Sinatra::Base
 
   get '/' do
     @title = "All Sinatra's Songs"
-    puts ">>>> /songs >> #{session[:admin]}"
+    # puts ">>>> /songs >> #{session[:admin]}" #When debugging for the lost session[:admin]
     # @songs = Song.all
     find_songs
     slim :songs

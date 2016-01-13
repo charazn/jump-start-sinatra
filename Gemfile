@@ -14,6 +14,7 @@ gem "dm-core"
 gem "dm-migrations"
 gem "coffee-script"
 gem "therubyracer"
+gem "dotenv"
 
 group :development do
   gem "dm-sqlite-adapter"

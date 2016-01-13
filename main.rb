@@ -10,11 +10,11 @@ require 'v8'
 require 'coffee-script'
 # require 'data_mapper'
 require 'securerandom'
-# require 'dotenv' #Cannot load
+require 'dotenv' #Cannot load #Can now be loaded!
 # require './song' #Removed when making the app modular
 require_relative 'asset_handler' #Same as require './asset_handler'
 
-# Dotenv.load
+Dotenv.load #Can now work!
 
 class Website < Sinatra::Base
   register Sinatra::Auth
@@ -103,6 +103,7 @@ class Website < Sinatra::Base
   end
 
   get '/' do
+    # puts ENV['GMAIL_USERNAME'] #Testing if gem dotenv works
     slim :home
   end
 
