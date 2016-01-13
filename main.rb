@@ -81,8 +81,8 @@ class Website < Sinatra::Base
         :address => 'smtp.gmail.com',
         :port => '587',
         :enable_starttls_auto => true,
-        :user_name => ENV['GMAIL_USERNAME'],
-        :password => ENV['GMAIL_PASSWORD'],
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
         :authentication => :plain,
         :domain => 'localhost.localdomain'
       }
