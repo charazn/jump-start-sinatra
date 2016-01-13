@@ -69,24 +69,24 @@ class Website < Sinatra::Base
     @title ||= "Songs By Sinatra"
   end
 
-  def send_message
-    Pony.mail(
-      :from => params[:name] + "<" + params[:email] + ">",
-      :to => "charazn37@gmail.com",
-      :subject => params[:name] + " has contacted you",
-      :body => params[:message],
-      :via => :smtp,
-      :via_options => {
-        :address => 'smtp.sendgrid.net',
-        :port => '587',
-        :enable_starttls_auto => true,
-        :user_name => ENV['SENDGRID_USERNAME'],
-        :password => ENV['SENDGRID_PASSWORD'],
-        :authentication => :plain
-        # :domain => 'localhost.localdomain'
-      }
-    )
-  end
+  # def send_message
+  #   Pony.mail(
+  #     :from => params[:name] + "<" + params[:email] + ">",
+  #     :to => "charazn37@gmail.com",
+  #     :subject => params[:name] + " has contacted you",
+  #     :body => params[:message],
+  #     :via => :smtp,
+  #     :via_options => {
+  #       :address => 'smtp.sendgrid.net',
+  #       :port => '587',
+  #       :enable_starttls_auto => true,
+  #       :user_name => ENV['SENDGRID_USERNAME'],
+  #       :password => ENV['SENDGRID_PASSWORD'],
+  #       :authentication => :plain
+  #       # :domain => 'localhost.localdomain'
+  #     }
+  #   )
+  # end
   # end
 
   #Moved to asset_handler.rb
@@ -117,7 +117,22 @@ class Website < Sinatra::Base
   end
 
   post '/contact' do
-    send_message
+    Pony.mail(
+      :from => params[:name] + "<" + params[:email] + ">",
+      :to => "charazn37@gmail.com",
+      :subject => params[:name] + " has contacted you",
+      :body => params[:message],
+      :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :enable_starttls_auto => true,
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain
+        # :domain => 'localhost.localdomain'
+      }
+    )
     flash[:notice] = "Thank you for your message. We'll be in touch soon."
     redirect to('/')
   end
