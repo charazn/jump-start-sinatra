@@ -70,7 +70,24 @@ class Website < Sinatra::Base
   end
 
   def send_message
-    Pony.options = {
+    # Pony.options = {
+    #   :via => :smtp,
+    #   :via_options => {
+    #     :address => 'smtp.sendgrid.net',
+    #     :port => '587',
+    #     :domain => 'heroku.com',
+    #     :user_name => ENV['SENDGRID_USERNAME'],
+    #     :password => ENV['SENDGRID_PASSWORD'],
+    #     :authentication => :plain,
+    #     :enable_starttls_auto => true
+    #   }
+    # }
+
+    Pony.mail(
+      :from => params[:name] + "<" + params[:email] + ">",
+      :to => "charazn37@gmail.com",
+      :subject => params[:name] + " has contacted you",
+      :body => params[:message],
       :via => :smtp,
       :via_options => {
         :address => 'smtp.sendgrid.net',
@@ -81,13 +98,6 @@ class Website < Sinatra::Base
         :authentication => :plain,
         :enable_starttls_auto => true
       }
-    }
-
-    Pony.mail(
-      :from => params[:name] + "<" + params[:email] + ">",
-      :to => "charazn37@gmail.com",
-      :subject => params[:name] + " has contacted you",
-      :body => params[:message]
     )
   end
   # end
