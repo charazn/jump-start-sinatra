@@ -1,10 +1,11 @@
 require 'sinatra/base'
-# require 'sinatra/flash' #Cannot load
+require 'sinatra/flash' #Cannot load #Can load after change to 'sinatra/base'
 
 module Sinatra
   module Auth
     module Helpers
       def authorized?
+        puts ">>> authorized? #{session[:admin]}"
         session[:admin]
       end
 
@@ -16,7 +17,9 @@ module Sinatra
     def self.registered(app)
       app.helpers Helpers
 
-      app.enable :esssions
+      app.enable :sessions
+      #Note :session_secret cannot be placed here as it will interfere with the enable :sessions
+      # app.set :session_secret, SecureRandom.hex(4) #Moved from main.rb
 
       app.set :username => 'frank',
               :password => 'sinatra'
@@ -27,12 +30,15 @@ module Sinatra
       end
 
       app.post '/login' do
+        puts "Logging in... before username password check"
         if params[:username] == settings.username && params[:password] == settings.password
           session[:admin] = true
-          # flash[:notice] = "You are logged in as #{settings.username}"
+          flash[:notice] = "You are logged in as #{settings.username}"
+          puts "Should log in >> #{session[:admin]}"
           redirect to('/songs')
         else
-          # flash[:notice] = "The username or password you entered is incorrect"
+          flash[:notice] = "The username or password you entered is incorrect"
+          puts "Failed to login"
           redirect to('/login')
         end
       end
@@ -40,7 +46,7 @@ module Sinatra
       app.get '/logout' do
         session[:admin] = nil
         # session.clear
-        # flash[:notice] = "You have now logged out"
+        flash[:notice] = "You have now logged out"
         redirect to('/')
       end
     end

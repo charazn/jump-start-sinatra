@@ -2,9 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    bcrypt (3.1.10)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
+    backports (3.6.7)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -12,20 +10,6 @@ GEM
     daemons (1.2.3)
     data_objects (0.10.16)
       addressable (~> 2.1)
-    datamapper (1.2.0)
-      dm-aggregates (~> 1.2.0)
-      dm-constraints (~> 1.2.0)
-      dm-core (~> 1.2.0)
-      dm-migrations (~> 1.2.0)
-      dm-serializer (~> 1.2.0)
-      dm-timestamps (~> 1.2.0)
-      dm-transactions (~> 1.2.0)
-      dm-types (~> 1.2.0)
-      dm-validations (~> 1.2.0)
-    dm-aggregates (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-constraints (1.2.0)
-      dm-core (~> 1.2.0)
     dm-core (1.2.1)
       addressable (~> 2.3)
     dm-do-adapter (1.2.0)
@@ -36,38 +20,15 @@ GEM
     dm-postgres-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_postgres (~> 0.10.6)
-    dm-serializer (1.2.2)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 1.6)
-      json_pure (~> 1.6)
-      multi_json (~> 1.0)
     dm-sqlite-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_sqlite3 (~> 0.10.6)
-    dm-timestamps (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-transactions (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-types (1.2.2)
-      bcrypt-ruby (~> 3.0)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 1.6)
-      multi_json (~> 1.0)
-      stringex (~> 1.4)
-      uuidtools (~> 2.1)
-    dm-validations (1.2.0)
-      dm-core (~> 1.2.0)
     do_postgres (0.10.16)
       data_objects (= 0.10.16)
     do_sqlite3 (0.10.16)
       data_objects (= 0.10.16)
     eventmachine (1.0.8)
     execjs (2.6.0)
-    fastercsv (1.5.5)
-    json (1.8.3)
-    json_pure (1.8.3)
     libv8 (3.16.14.13)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -79,18 +40,26 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     ref (2.0.0)
     sass (3.4.20)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    sinatra-contrib (1.4.6)
+      backports (>= 2.0)
+      multi_json
+      rack-protection
+      rack-test
+      sinatra (~> 1.4.0)
+      tilt (>= 1.3, < 3)
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
-    stringex (1.5.1)
     temple (0.7.6)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
@@ -100,20 +69,21 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (~> 1.0)
     tilt (2.0.2)
-    uuidtools (2.1.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   coffee-script
-  datamapper
+  dm-core
+  dm-migrations
   dm-postgres-adapter
   dm-sqlite-adapter
   pg
   pony
   sass
   sinatra
+  sinatra-contrib
   sinatra-flash
   slim
   therubyracer
