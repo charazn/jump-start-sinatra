@@ -3,3 +3,4 @@
 .bundle
 .env
 development.db
+*.db

@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/flash' #Cannot load #Can load after change to 'sinatra/base'
+# require 'securerandom' #Did not use SecureRandom
 
 module Sinatra
   module Auth

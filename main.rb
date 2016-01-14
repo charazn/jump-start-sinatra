@@ -1,16 +1,16 @@
-# require 'sinatra/base' #From 'sinatra'
+# require 'sinatra/base' #Change from 'sinatra'
 # require 'slim'
 # require 'sass'
 # require 'sinatra/flash' #Cannot load, #Can load after changing to 'sinatra/base'
 # require 'sinatra/reloader' #if development? #Cannot load after chaning to 'sinatra/base' #Now can load
-require 'pony' #Cannot load #Can load after changing to 'sinatra/base'
 # require './sinatra/auth'
-require 'v8'
-require 'coffee-script'
-# require 'data_mapper'
-require 'securerandom'
-require 'dotenv' #Cannot load #Now can load
 # require './song' #Removed when making the app modular
+# require 'data_mapper'
+# require 'coffee-script'
+# require 'v8'
+# require 'securerandom'
+require 'pony' #Cannot load #Can load after changing to 'sinatra/base'
+require 'dotenv' #Cannot load #Now can load
 require_relative 'asset_handler' #Same as require './asset_handler'
 
 Dotenv.load #Now can load
@@ -51,24 +51,25 @@ class Website < ApplicationController
   # end
 
   #I find this somewhat unnecessary because @title still must be set in each route handler
-  before do
-    set_title
-  end
+  #Before, def css, current_path?, set_title are moved to ApplicationController
+  # before do
+  #   set_title
+  # end
 
   # helpers do #Removed when making app modular
-  def css(*stylesheets)
-    stylesheets.map do |stylesheet|
-      "<link href=\"/#{stylesheet}.css\" media=\"screen, projection\" rel=\"stylesheet\" />"
-    end.join
-  end
+  # def css(*stylesheets)
+  #   stylesheets.map do |stylesheet|
+  #     "<link href=\"/#{stylesheet}.css\" media=\"screen, projection\" rel=\"stylesheet\" />"
+  #   end.join
+  # end
 
-  def current_path?(path = '/')
-    (request.path == path || request.path == path + '/') ? "current" : nil
-  end
+  # def current_path?(path = '/')
+  #   (request.path == path || request.path == path + '/') ? "current" : nil
+  # end
 
-  def set_title
-    @title ||= "Songs By Sinatra"
-  end
+  # def set_title
+  #   @title ||= "Songs By Sinatra"
+  # end
 
   def send_message
     Pony.mail(
@@ -120,7 +121,9 @@ class Website < ApplicationController
 
   post '/contact' do
     send_message
+    puts ">>> Before flash notice <<<"
     flash[:notice] = "Thank you for your message. We'll be in touch soon."
+    puts ">>> After flash notice <<<"
     redirect to('/')
   end
 

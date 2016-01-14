@@ -1,13 +1,13 @@
 # require 'sinatra/base'
-# require 'data_mapper' #Follow the book without using Datamapper
-require 'dm-core'
-require 'dm-migrations'
-# require 'dm-timestamps'
 # require 'slim'
 # require 'sass'
 # require 'sinatra/flash' #Can load after changing to 'sinatra/base'
 # require 'sinatra/reloader'
 # require './sinatra/auth'
+# require 'data_mapper' #Follow the book without using Datamapper
+# require 'dm-timestamps' #Not used
+require 'dm-core'
+require 'dm-migrations'
 
 #Moved to main.rb
 # configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
@@ -82,23 +82,24 @@ class SongController < ApplicationController
     DataMapper.setup(:default, ENV['DATABASE_URL'])
   end
 
-  before do
-    set_title
-  end
+  #Before, def css, current_path?, set_title are moved to ApplicationController
+  # before do
+  #   set_title
+  # end
 
-  def css(*stylesheets)
-    stylesheets.map do |stylesheet|
-      "<link href=\"/#{stylesheet}.css\" media=\"screen, projection\" rel=\"stylesheet\" />"
-    end.join
-  end
+  # def css(*stylesheets)
+  #   stylesheets.map do |stylesheet|
+  #     "<link href=\"/#{stylesheet}.css\" media=\"screen, projection\" rel=\"stylesheet\" />"
+  #   end.join
+  # end
 
-  def current_path?(path = '/')
-    (request.path == path || request.path == path + '/') ? "current" : nil
-  end
+  # def current_path?(path = '/')
+  #   (request.path == path || request.path == path + '/') ? "current" : nil
+  # end
 
-  def set_title
-    @title ||= "Songs By Sinatra"
-  end
+  # def set_title
+  #   @title ||= "Songs By Sinatra"
+  # end
 
   get '/' do
     @title = "All Sinatra's Songs"
