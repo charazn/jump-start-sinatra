@@ -2,4 +2,4 @@
 .sass-cache
 .bundle
 .env
-development.rb
+development.db

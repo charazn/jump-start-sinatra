@@ -1,13 +1,13 @@
-require 'sinatra/base'
+# require 'sinatra/base'
 # require 'data_mapper' #Follow the book without using Datamapper
 require 'dm-core'
 require 'dm-migrations'
 # require 'dm-timestamps'
-require 'slim'
-require 'sass'
-require 'sinatra/flash' #Can load after changing to 'sinatra/base'
-require 'sinatra/reloader'
-require './sinatra/auth'
+# require 'slim'
+# require 'sass'
+# require 'sinatra/flash' #Can load after changing to 'sinatra/base'
+# require 'sinatra/reloader'
+# require './sinatra/auth'
 
 #Moved to main.rb
 # configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
@@ -60,10 +60,10 @@ module SongHelpers
 end
 
 
-class SongController < Sinatra::Base
+class SongController < ApplicationController
   enable :method_override
-  register Sinatra::Flash
-  register Sinatra::Auth
+  # register Sinatra::Flash #Inherit from ApplicationController
+  # register Sinatra::Auth #Inherit from ApplicationController
 
   helpers SongHelpers
 

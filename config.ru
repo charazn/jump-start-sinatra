@@ -1,5 +1,6 @@
 require 'sinatra/base'
 
+require './application'
 require './main'
 require './song'
 

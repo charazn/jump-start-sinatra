@@ -1,10 +1,10 @@
-require 'sinatra/base' #From 'sinatra'
-require 'slim'
-require 'sass'
-require 'sinatra/flash' #Cannot load, #Can load after changing to 'sinatra/base'
-require 'sinatra/reloader' #if development? #Cannot load after chaning to 'sinatra/base' #Now can load
+# require 'sinatra/base' #From 'sinatra'
+# require 'slim'
+# require 'sass'
+# require 'sinatra/flash' #Cannot load, #Can load after changing to 'sinatra/base'
+# require 'sinatra/reloader' #if development? #Cannot load after chaning to 'sinatra/base' #Now can load
 require 'pony' #Cannot load #Can load after changing to 'sinatra/base'
-require './sinatra/auth'
+# require './sinatra/auth'
 require 'v8'
 require 'coffee-script'
 # require 'data_mapper'
@@ -15,9 +15,9 @@ require_relative 'asset_handler' #Same as require './asset_handler'
 
 Dotenv.load #Now can load
 
-class Website < Sinatra::Base
-  register Sinatra::Auth
-  register Sinatra::Flash
+class Website < ApplicationController
+  # register Sinatra::Flash #Inherit from ApplicationController
+  # register Sinatra::Auth #Inherit from ApplicationController
 
   use AssetHandler
 
