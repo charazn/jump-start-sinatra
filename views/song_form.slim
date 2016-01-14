@@ -6,9 +6,9 @@ label for="length" Length:
 input#length type="number" name="song[length]" value="#{@song.length}"
 br
 
-/ label for="released_on" Date(mm/dd/yyyy):
-/ input#released_on type="text" name="song[released_on]" value="#{@song.released_on.strftime("%m/%d/%Y") if @song.released_on}"
-/ br
+label for="released_on" Date(yyyy-mm-dd):
+input#released_on type="text" name="song[released_on]" value="#{@song.released_on.strftime("%Y-%m-%d") if @song.released_on}"
+br
 
 label for="lyrics" Lyrics:
 textarea#lyrics name="song[lyrics]" == @song.lyrics

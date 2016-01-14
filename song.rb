@@ -2,6 +2,7 @@ require 'sinatra/base'
 # require 'data_mapper' #Follow the book without using Datamapper
 require 'dm-core'
 require 'dm-migrations'
+# require 'dm-timestamps'
 require 'slim'
 require 'sass'
 require 'sinatra/flash' #Can load after changing to 'sinatra/base'
@@ -22,13 +23,16 @@ class Song
   property :title, String
   property :lyrics, Text
   property :length, Integer
-  # property :released_on, DateTime
+  property :released_on, Date
   property :likes, Integer, :default => 0
 
   # def released_on=date
   #   super Date.parse(date) #Suggested to use Date.parse instead of Date.new!
   # end
 
+  #After setting the default dateFormat in jquery to "yy-mm-dd" the string for the input is "yyyy-dd-mm"
+  #Apparently this does not need to be set with a setter method for the database to know how to save,
+  #read and display it in the proper format.
   # def released_on=date
   #   super Date.strptime(date, '%m/%d/%Y')
   # end
@@ -106,9 +110,11 @@ class SongController < Sinatra::Base
 
   post '/' do
     # song = Song.create(params[:song])
-    create_song
+    # song = Song.new(params[song])
+    # if song.errors.empty?
+    # create_song
     flash[:notice] = "Song successfully added" if create_song #song = Song.create(params[:song])
-    redirect to("/#{song.id}")
+    redirect to("/#{@song.id}")
   end
 
   get '/new' do

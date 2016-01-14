@@ -2,19 +2,18 @@ require 'sinatra/base' #From 'sinatra'
 require 'slim'
 require 'sass'
 require 'sinatra/flash' #Cannot load, #Can load after changing to 'sinatra/base'
-require 'sinatra/reloader'
+require 'sinatra/reloader' #if development? #Cannot load after chaning to 'sinatra/base' #Now can load
 require 'pony' #Cannot load #Can load after changing to 'sinatra/base'
 require './sinatra/auth'
-# require 'sinatra/reloader' #if development? #Cannot load after chaning to 'sinatra/base'
 require 'v8'
 require 'coffee-script'
 # require 'data_mapper'
 require 'securerandom'
-require 'dotenv' #Cannot load #Can now be loaded!
+require 'dotenv' #Cannot load #Now can load
 # require './song' #Removed when making the app modular
 require_relative 'asset_handler' #Same as require './asset_handler'
 
-Dotenv.load #Can now work!
+Dotenv.load #Now can load
 
 class Website < Sinatra::Base
   register Sinatra::Auth
@@ -30,24 +29,26 @@ class Website < Sinatra::Base
   #   set :password, 'sinatra' #Set in sinatra/auth
   # end
 
-  configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
-  #With this commented, the authentication works!
-    # DataMapper::Logger.new($stdout, :debug) #Removed when making app modular, placed in SongController class
-    # DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/development.db") #Removed when making app modular, placed in SongController class
-    # DataMapper.auto_upgrade! #For application wide use
-    set :email_address => 'smtp.gmail.com',
-        :email_user_name => ENV['GMAIL_USERNAME'],
-        :email_password => ENV['GMAIL_PASSWORD'],
-        :email_domain => 'localhost.localdomain'
-  end
+  ### The email settings in both development and configure blocks did not affect the Pony mail settings which it should.
+  ### To read more Sinatra documentation on this.
+  # configure :development do #Error: undefined method `configure' for main:Object (NoMethodError)
+  # #With this commented, the authentication works!
+  #   # DataMapper::Logger.new($stdout, :debug) #Removed when making app modular, placed in SongController class
+  #   # DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/development.db") #Removed when making app modular, placed in SongController class
+  #   # DataMapper.auto_upgrade! #For application wide use
+  #   set :email_address => 'smtp.gmail.com',
+  #       :email_user_name => ENV['GMAIL_USERNAME'],
+  #       :email_password => ENV['GMAIL_PASSWORD'],
+  #       :email_domain => 'localhost.localdomain'
+  # end
 
-  configure :production do
-    # DataMapper::setup(:default, ENV['DATABASE_URL']) #Removed when making app modular, placed in SongController class
-    set :email_address => 'smtp.sendgrid.net',
-        :email_user_name => ENV['SENDGRID_USERNAME'],
-        :email_password => ENV['SENDGRID_PASSWORD'],
-        :email_domain => 'heroku.com'
-  end
+  # configure :production do
+  #   # DataMapper::setup(:default, ENV['DATABASE_URL']) #Removed when making app modular, placed in SongController class
+  #   set :email_address => 'smtp.sendgrid.net',
+  #       :email_user_name => ENV['SENDGRID_USERNAME'],
+  #       :email_password => ENV['SENDGRID_PASSWORD'],
+  #       :email_domain => 'heroku.com'
+  # end
 
   #I find this somewhat unnecessary because @title still must be set in each route handler
   before do
@@ -69,24 +70,25 @@ class Website < Sinatra::Base
     @title ||= "Songs By Sinatra"
   end
 
-  # def send_message
-  #   Pony.mail(
-  #     :from => params[:name] + "<" + params[:email] + ">",
-  #     :to => "charazn37@gmail.com",
-  #     :subject => params[:name] + " has contacted you",
-  #     :body => params[:message],
-  #     :via => :smtp,
-  #     :via_options => {
-  #       :address => 'smtp.sendgrid.net',
-  #       :port => '587',
-  #       :enable_starttls_auto => true,
-  #       :user_name => ENV['SENDGRID_USERNAME'],
-  #       :password => ENV['SENDGRID_PASSWORD'],
-  #       :authentication => :plain
-  #       # :domain => 'localhost.localdomain'
-  #     }
-  #   )
-  # end
+  def send_message
+    Pony.mail(
+      :from => params[:name] + "<" + params[:email] + ">",
+      :to => "charazn37@gmail.com",
+      :subject => params[:name] + " has contacted you",
+      :body => params[:message],
+      # :port => '587',
+      :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :domain => 'heroku.com',
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      }
+    )
+  end
   # end
 
   #Moved to asset_handler.rb
@@ -103,7 +105,6 @@ class Website < Sinatra::Base
   end
 
   get '/' do
-    # puts ENV['GMAIL_USERNAME'] #Testing if gem dotenv works
     slim :home
   end
 
@@ -118,22 +119,7 @@ class Website < Sinatra::Base
   end
 
   post '/contact' do
-    Pony.mail(
-      :from => params[:name] + "<" + params[:email] + ">",
-      :to => "charazn37@gmail.com",
-      :subject => params[:name] + " has contacted you",
-      :body => params[:message],
-      :via => :smtp,
-      :via_options => {
-        :address => 'smtp.sendgrid.net',
-        :port => '587',
-        :enable_starttls_auto => true,
-        :user_name => ENV['SENDGRID_USERNAME'],
-        :password => ENV['SENDGRID_PASSWORD'],
-        :authentication => :plain
-        # :domain => 'localhost.localdomain'
-      }
-    )
+    send_message
     flash[:notice] = "Thank you for your message. We'll be in touch soon."
     redirect to('/')
   end
