@@ -8,11 +8,12 @@ class AssetHandler < Sinatra::Base
     set :start_time, Time.now #This configure and before block on page 139
   end
 
-  before do
-    last_modified settings.start_time
-    etag settings.start_time.to_s
-    cache_control :public, :must_revalidate
-  end
+  #NOTE: This was causing the flash not to display immediately after the redirect!
+  # before do
+  #   last_modified settings.start_time
+  #   etag settings.start_time.to_s
+  #   cache_control :public, :must_revalidate
+  # end
 
   get '/javascripts/*.js' do
     pass unless settings.coffeescript?
