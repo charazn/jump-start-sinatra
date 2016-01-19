@@ -6,7 +6,6 @@ h1 {
 header h1 {
   font-size: 40px;
   line-height: 80px;
-  /* background shorthand: background-color background-image background-repeat background-attachment(not set here) background-position */
   background: transparent url(/images/logo.png) 0 0 no-repeat;
   padding-left: 84px;
 }

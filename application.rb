@@ -9,7 +9,7 @@ require 'v8'
 
 
 class ApplicationController < Sinatra::Base
-  register Sinatra::Flash #Must register when using Sinatra::Base as per Github https://github.com/SFEley/sinatra-flash
+  register Sinatra::Flash
   register Sinatra::Auth
 
   before do

@@ -8,16 +8,12 @@ html lang="en"
     script src="https://code.jquery.com/jquery-2.2.0.min.js"
     script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
     script src="/javascripts/application.js"
-    / href is referring to a file that does not exist in the public folder, however that sets up a
-    / path /application.css when the link askis for that file, the get '/application.css' route
-    / handler in main.rb will route the link to the correct stylesheet at /views/application.scss
-    / using the sass preprocessor because by default the route handler will look in the /views folder for files.
+
   body
     header
       h1 Songs By Sinatra
       == slim :nav
 
     section
-      / From sinatra-flash
       == styled_flash
       == yield
